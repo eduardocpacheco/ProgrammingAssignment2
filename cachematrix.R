@@ -1,15 +1,29 @@
-## Put comments here that give an overall description of what your
-## functions do
+## In this set of functions we can improve the efficiency of matrix inversion
 
-## Write a short comment describing this function
+## First we create a matrix cache, using a function to store the inverse matrix
 
 makeCacheMatrix <- function(x = matrix()) {
-
+  m<-NULL
+  set<-function(y){
+    x<<-y
+    m<<-NULL
+  }
+  get<-function() x
+  setmatrix<-function(solve) m<<- solve
+  getmatrix<-function() m
+  list(set=set, get=get,
+       setmatrix=setmatrix,
+       getmatrix=getmatrix)
 }
-
-
-## Write a short comment describing this function
-
-cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+## Then we can call the function to reverse the matrix
+cacheSolve <- function(x=matrix(), ...) {
+  m<-x$getmatrix()
+  if(!is.null(m)){
+    message("getting the cached data")
+    return(m)
+  }
+  matrix<-x$get()
+  m<-solve(matrix, ...)
+  x$setmatrix(m)
+  m
 }
